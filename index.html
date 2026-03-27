@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ashana Journeys — Adventure. Fun. Real Connections.</title>
+  <meta name="description" content="Curated group hikes, diving, surfing and cultural trips across Malaysia and the world. Join a community of real adventurers."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Custom cursor (hidden on touch) -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-trail" id="cursor-trail" aria-hidden="true"></div>
+
+  <!-- ── NAVIGATION ────────────────────────────────────── -->
+  <nav id="nav" role="navigation" aria-label="Main">
+    <a href="#hero" class="nav-brand">
+      <img src="logo.png" alt="Ashana Journeys" class="nav-logo"/>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#trips"    class="nav-link">Trips</a></li>
+      <li><a href="#about"    class="nav-link">About</a></li>
+      <li><a href="#merchant" class="nav-link">Gear</a></li>
+      <li><a href="#social"   class="nav-link">Connect</a></li>
+    </ul>
+    <a href="#trips" class="nav-cta btn-magnetic">Book a Trip</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile nav fullscreen overlay -->
+  <div class="nav-mobile" id="nav-mobile" role="dialog" aria-label="Mobile menu">
+    <a href="#trips"    class="nav-mobile-link">Trips</a>
+    <a href="#about"    class="nav-mobile-link">About</a>
+    <a href="#merchant" class="nav-mobile-link">Gear</a>
+    <a href="#social"   class="nav-mobile-link">Connect</a>
+    <a href="https://wa.me/60102046250" target="_blank" rel="noopener" class="nav-mobile-cta">WhatsApp Us →</a>
+  </div>
+
+  <main>
+
+    <!-- ── HERO ──────────────────────────────────────────── -->
+    <section id="hero" aria-label="Hero">
+      <div class="hero-bg">
+        <div class="hero-gradient" aria-hidden="true"></div>
+        <div class="hero-mtn"      aria-hidden="true"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-eyebrow" aria-hidden="true">
+          <span class="eyebrow-line"></span>
+          Trip Organiser · Travel Host · Real Connections
+          <span class="eyebrow-line"></span>
+        </div>
+        <h1 class="hero-title">
+          <span class="hero-line">Adventure.</span>
+          <em   class="hero-line delay-1">Real People.</em>
+        </h1>
+        <p class="hero-sub">
+          Curated group hikes, diving and surfing trips — local and international.
+          Come alone or with family. You're joining a community.
+        </p>
+        <div class="hero-ctas">
+          <a href="#trips" class="btn-primary btn-magnetic">Explore Trips</a>
+          <a href="https://wa.me/60102046250" target="_blank" rel="noopener" class="btn-outline btn-magnetic">WhatsApp Us</a>
+        </div>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- ── MARQUEE TICKER ────────────────────────────────── -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="m-item">Group Hikes</span><span class="m-dot">✦</span>
+        <span class="m-item">Scuba Diving</span><span class="m-dot">✦</span>
+        <span class="m-item">Surfing Trips</span><span class="m-dot">✦</span>
+        <span class="m-item">Cultural Tours</span><span class="m-dot">✦</span>
+        <span class="m-item">Family Getaways</span><span class="m-dot">✦</span>
+        <span class="m-item">International Adventures</span><span class="m-dot">✦</span>
+        <!-- duplicate for seamless loop -->
+        <span class="m-item">Group Hikes</span><span class="m-dot">✦</span>
+        <span class="m-item">Scuba Diving</span><span class="m-dot">✦</span>
+        <span class="m-item">Surfing Trips</span><span class="m-dot">✦</span>
+        <span class="m-item">Cultural Tours</span><span class="m-dot">✦</span>
+        <span class="m-item">Family Getaways</span><span class="m-dot">✦</span>
+        <span class="m-item">International Adventures</span><span class="m-dot">✦</span>
+      </div>
+    </div>
+
+    <!-- ── TRIPS ─────────────────────────────────────────── -->
+    <section id="trips">
+      <span class="sec-num" aria-hidden="true">01</span>
+      <div class="container">
+        <div class="sec-header reveal-up">
+          <div>
+            <div class="sec-eye">Upcoming Adventures</div>
+            <h2 class="sec-title">Join Our <em>Trips</em></h2>
+          </div>
+          <p class="sec-desc">All trips include experienced guides, curated itineraries, and a community of like-minded travellers ready to explore.</p>
+        </div>
+        <div id="trips-grid" class="trips-grid">
+          <p class="empty-msg">Loading trips…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT ─────────────────────────────────────────── -->
+    <section id="about">
+      <span class="sec-num" aria-hidden="true">02</span>
+      <div class="container">
+        <div class="about-grid">
+
+          <div class="about-visual reveal-left">
+            <div class="about-frame">
+              <img
+                src="https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=700&q=80"
+                alt="Group of adventurers on a trip with Ashana Journeys"
+                class="about-img"
+                loading="lazy"/>
+              <div class="about-frame-border" aria-hidden="true"></div>
+            </div>
+            <div class="about-stat">
+              <div class="stat-n">100<sup>+</sup></div>
+              <div class="stat-l">Adventurers & growing</div>
+            </div>
+            <div class="about-ghost" aria-hidden="true">Explore</div>
+          </div>
+
+          <div class="about-text reveal-right">
+            <div class="sec-eye">Who We Are</div>
+            <h2 class="sec-title">Your World,<br/><em>Curated.</em></h2>
+            <p>Ashana Journeys is a Trip Host platform focused on bringing people together through curated group travel. We host hikes, diving and surfing trips across local and international destinations.</p>
+            <p>Whether you're coming solo or with family — you're not just joining a trip, you're joining a community built on genuine connection and shared adventure.</p>
+            <div class="pillars">
+              <div class="pillar reveal-up">
+                <span class="pillar-icon">🏔️</span>
+                <h4>Hikes & Treks</h4>
+                <p>Local & international trails</p>
+              </div>
+              <div class="pillar reveal-up delay-1">
+                <span class="pillar-icon">🤿</span>
+                <h4>Dive & Surf</h4>
+                <p>Guided water adventures</p>
+              </div>
+              <div class="pillar reveal-up delay-2">
+                <span class="pillar-icon">️⛩️</span>
+                <h4>Cultural Tours</h4>
+                <p>Temples, cities & slow travel</p>
+              </div>
+              <div class="pillar reveal-up delay-3">
+                <span class="pillar-icon">👨‍👩‍👧</span>
+                <h4>Family Friendly</h4>
+                <p>Easy-going group experiences</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MERCHANT ──────────────────────────────────────── -->
+    <section id="merchant">
+      <span class="sec-num light" aria-hidden="true">03</span>
+      <div class="container">
+        <div class="sec-header reveal-up">
+          <div>
+            <div class="sec-eye light">Official Gear</div>
+            <h2 class="sec-title light">Ashana <em>Store</em></h2>
+          </div>
+          <p class="sec-desc light">Gear made for adventurers. Wear it on the trail, in the water, or anywhere life takes you next.</p>
+        </div>
+        <div id="merch-grid" class="merch-grid">
+          <!-- Static 360° T-shirt card -->
+          <div class="merch-card featured" id="tshirt-card">
+            <div class="merch-badge">360° View</div>
+            <div class="ts-scene" id="ts-scene">
+              <div class="ts-inner" id="ts-inner">
+                <div class="ts-face front">
+                  <img src="tshirt-front.png" alt="Ashana Journeys T-Shirt Front"
+                       onerror="this.src='https://placehold.co/195x215/1e3a2f/c9952b?text=Front'"/>
+                </div>
+                <div class="ts-face back">
+                  <img src="tshirt-back.png" alt="Ashana Journeys T-Shirt Back"
+                       onerror="this.src='https://placehold.co/195x215/1e3a2f/c9952b?text=Back'"/>
+                </div>
+              </div>
+            </div>
+            <p class="ts-hint" aria-hidden="true">↔ Drag to rotate</p>
+            <div class="merch-info">
+              <h3>Ashana Journeys T-Shirt</h3>
+              <p class="merch-price">RM 55</p>
+              <a href="#" class="btn-buy">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SOCIAL ────────────────────────────────────────── -->
+    <section id="social">
+      <div class="container container-narrow">
+        <div class="social-header">
+          <img src="logo.png" alt="Ashana Journeys" class="social-logo"/>
+          <div class="sec-eye light centered">Find Us Online</div>
+          <h2 class="sec-title light centered">Connect <em>With Us</em></h2>
+        </div>
+        <div class="social-stack">
+          <a href="https://wa.me/60102046250" target="_blank" rel="noopener" class="soc-card wa">
+            <div class="soc-icon">💬</div>
+            <div class="soc-txt"><b>WhatsApp</b><span>+60 10 204 6250</span></div>
+            <span class="soc-arr" aria-hidden="true">→</span>
+          </a>
+          <a href="https://instagram.com/ashanajourneys" target="_blank" rel="noopener" class="soc-card instagram">
+            <div class="soc-icon">📸</div>
+            <div class="soc-txt"><b>Instagram</b><span>@ashanajourneys</span></div>
+            <span class="soc-arr" aria-hidden="true">→</span>
+          </a>
+          <a href="https://tiktok.com/@ashanajourneys" target="_blank" rel="noopener" class="soc-card">
+            <div class="soc-icon">🎵</div>
+            <div class="soc-txt"><b>TikTok</b><span>@ashanajourneys</span></div>
+            <span class="soc-arr" aria-hidden="true">→</span>
+          </a>
+          <a href="https://youtube.com/@ashanajourneys" target="_blank" rel="noopener" class="soc-card">
+            <div class="soc-icon">▶️</div>
+            <div class="soc-txt"><b>YouTube</b><span>Ashana Journeys Travel</span></div>
+            <span class="soc-arr" aria-hidden="true">→</span>
+          </a>
+          <a href="https://facebook.com/ashanajourneys" target="_blank" rel="noopener" class="soc-card">
+            <div class="soc-icon">👥</div>
+            <div class="soc-txt"><b>Facebook</b><span>Ashana Journeys Official</span></div>
+            <span class="soc-arr" aria-hidden="true">→</span>
+          </a>
+          <a href="mailto:ashanajourneys@gmail.com" class="soc-card">
+            <div class="soc-icon">✉️</div>
+            <div class="soc-txt"><b>Email Us</b><span>ashanajourneys@gmail.com</span></div>
+            <span class="soc-arr" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer id="footer">
+    <div class="ft-grid container">
+      <div class="ft-brand">
+        <img src="logo.png" alt="Ashana Journeys" class="ft-logo"/>
+        <p>A Trip Host platform bringing people together through curated group travel. Hikes, diving, surfing & cultural experiences — for everyone.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Navigate</h4>
+        <a href="#trips">Upcoming Trips</a>
+        <a href="#about">About Us</a>
+        <a href="#merchant">Gear Store</a>
+        <a href="#social">Connect</a>
+      </div>
+      <div class="ft-col">
+        <h4>Contact</h4>
+        <a href="tel:+60102046250">+60 10 204 6250</a>
+        <a href="mailto:ashanajourneys@gmail.com">ashanajourneys@gmail.com</a>
+        <span class="ft-note">WhatsApp preferred</span>
+      </div>
+    </div>
+    <div class="ft-bottom container">
+      <p>© 2025 Ashana Journeys. All rights reserved.</p>
+      <em class="ft-motto">"Come join us on the next trip."</em>
+    </div>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

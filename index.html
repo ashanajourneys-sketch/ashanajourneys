@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#07080c"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="format-detection" content="telephone=no"/>
+
+  <!-- SEO -->
+  <title>Ashana Journeys — Adventure. Real People. Real Connections.</title>
+  <meta name="description" content="Curated group hikes, diving, surfing and cultural trips across Malaysia and the world. Join a community of real adventurers."/>
+  <meta name="robots" content="index, follow"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type"         content="website"/>
+  <meta property="og:url"          content="https://ashanajourneys.com/"/>
+  <meta property="og:title"        content="Ashana Journeys — Adventure. Real People."/>
+  <meta property="og:description"  content="Curated group hikes, diving, surfing and cultural trips. Join a community of real adventurers."/>
+  <meta property="og:image"        content="https://ashanajourneys.com/og-cover.jpg"/>
+  <meta property="og:image:width"  content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:site_name"    content="Ashana Journeys"/>
+  <meta property="og:locale"       content="en_MY"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content="Ashana Journeys — Adventure. Real People."/>
+  <meta name="twitter:description" content="Curated group hikes, diving, surfing and cultural trips."/>
+  <meta name="twitter:image"       content="https://ashanajourneys.com/og-cover.jpg"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,900&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+/* ================================================================
+   ASHANA JOURNEYS — "Year 2050" Native App Experience
+   Deep Glassmorphism · Bioluminescent Cyan · Multi-layer Parallax
+   Horizontal Snap Carousel · Floating Dock/Sidebar Nav
+   Vanilla HTML / CSS / JS  ·  Mobile-First  ·  Single File
+================================================================ */
+
+/* ────────────────────────────────────────────────────────────────
+   §1  DESIGN TOKENS
+──────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand palette */
+  --forest:      #1a1c22;
+  --forest-mid:  #20232b;
+  --forest-deep: #0f1015;
+  --forest-ink:  #07080c;
+  --cream:       #f0ebe0;
+  --cream-warm:  #ede8d9;
+  --gold:        #c9952b;
+  --gold-hi:     #e2aa3a;
+  --gold-glow:   rgba(201,149,43,0.22);
+  --gold-border: rgba(201,149,43,0.28);
+
+  /* NEW — Bioluminescent Deep Blue / Glacier Cyan */
+  --cyan:        #3de8f4;
+  --cyan-mid:    #1ec8d4;
+  --cyan-dim:    rgba(61,232,244,0.12);
+  --cyan-glow:   rgba(61,232,244,0.22);
+  --cyan-border: rgba(61,232,244,0.28);
+
+  /* Ink / text shades */
+  --ink:     rgba(240,235,224,0.92);
+  --ink-mid: rgba(240,235,224,0.52);
+  --ink-low: rgba(240,235,224,0.22);
+  --ink-min: rgba(240,235,224,0.10);
+
+  /* Glassmorphism recipe */
+  --glass:        rgba(12,14,20,0.52);
+  --glass-hi:     rgba(18,20,28,0.72);
+  --glass-border: rgba(255,255,255,0.09);
+  --glass-blur:   blur(12px) saturate(150%);
+  --glass-blur-s: blur(8px) saturate(130%);
+
+  /* Typography */
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+
+  /* Easing */
+  --spring:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Layout */
+  --dock-h:    76px;
+  --sidebar-w: 70px;
+  --safe-b:    env(safe-area-inset-bottom, 0px);
+  --safe-t:    env(safe-area-inset-top,    0px);
+  --safe-l:    env(safe-area-inset-left,   0px);
+  --safe-r:    env(safe-area-inset-right,  0px);
+  --pad:       max(1.25rem, var(--safe-l));
+
+  /* JS viewport polyfill */
+  --svh: 1vh;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §2  RESET & BASE
+──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  font-family: var(--sans);
+  background: var(--forest-ink);
+  color: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  /* Room for floating bottom dock on mobile */
+  padding-bottom: calc(var(--dock-h) + max(1.2rem, var(--safe-b)));
+}
+@media (min-width: 960px) {
+  body { padding-bottom: 0; padding-left: 0; padding-right: 80px; }
+}
+img    { max-width: 100%; height: auto; display: block; }
+a      { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+input, select, textarea { font-size: max(16px, 1rem); } /* prevent iOS auto-zoom */
+
+/* All anchor targets clear any nav */
+[id] { scroll-margin-top: 1.5rem; }
+@media (min-width: 960px) { [id] { scroll-margin-top: 2rem; } }
+
+/* Global overflow guards */
+html, body, section, .wrap { max-width: 100%; overflow-x: hidden; }
+
+/* ────────────────────────────────────────────────────────────────
+   §3  FILM GRAIN — lightweight repeating tile (no SVG math filter)
+──────────────────────────────────────────────────────────────── */
+
+.c-ring {
+  width: 36px; height: 36px;
+  border: 1px solid var(--cyan-glow); border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 10000;
+  transform: translate(-50%,-50%);
+  transition: left .1s ease, top .1s ease, width .22s var(--spring), height .22s var(--spring);
+}
+.c-dot.on { width: 44px; height: 44px; background: rgba(61,232,244,0.08); mix-blend-mode: normal; border: 1px solid var(--cyan); }
+.c-ring.on { width: 60px; height: 60px; border-color: var(--cyan); }
+@media (pointer: coarse) { .c-dot, .c-ring { display: none !important; } }
+
+/* ────────────────────────────────────────────────────────────────
+   §5  FLOATING BOTTOM DOCK — mobile navigation (iOS-style)
+──────────────────────────────────────────────────────────────── */
+#dock {
+  position: fixed;
+  bottom: max(1rem, var(--safe-b));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 2.5rem), 430px);
+  height: var(--dock-h);
+  z-index: 900;
+
+  /* Glassmorphism */
+  background: var(--glass-hi);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 26px;
+  box-shadow:
+    0 24px 64px rgba(0,0,0,0.6),
+    0 0 0 0.5px rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.09),
+    0 0 60px rgba(61,232,244,0.07);
+
+  display: flex; align-items: center; justify-content: space-around;
+  padding: 0 .75rem;
+
+  animation: dock-in .9s var(--spring) .3s both;
+}
+@keyframes dock-in {
+  from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);     opacity: 1; }
+}
+
+.dock-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  min-width: 54px; min-height: 54px; justify-content: center;
+  border-radius: 14px; padding: .45rem .5rem;
+  position: relative; transition: background .25s ease;
+}
+@media (hover: hover) { .dock-btn:hover { background: var(--cyan-dim); } }
+.dock-btn.active { background: var(--cyan-dim); }
+.dock-btn.active .dock-lbl { color: var(--cyan); }
+.dock-btn.active::after {
+  content: ''; position: absolute; bottom: 5px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+}
+.dock-ico { font-size: 1.15rem; line-height: 1; }
+.dock-lbl {
+  font-size: .52rem; font-weight: 400; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-low);
+  transition: color .25s ease;
+}
+.dock-logo-img {
+  height: 36px; width: auto; object-fit: contain;
+  filter: brightness(20) saturate(0); opacity: .65;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §6  NAVIGATION — mobile bottom dock + desktop right sidebar
+──────────────────────────────────────────────────────────────── */
+#sidebar { display: none; }
+
+@media (min-width: 960px) {
+  /* Hide mobile dock on desktop */
+  #dock { display: none; }
+
+  /* Right-edge vertical glassmorphism sidebar — fixed, 80 px wide */
+  #sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    right: 0; top: 0; bottom: 0;
+    width: 80px;
+    z-index: 900;
+    padding: max(1.8rem, var(--safe-t)) 0 max(1.8rem, var(--safe-b));
+
+    background: var(--glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-left: 1px solid var(--glass-border);
+    box-shadow:
+      -4px 0 40px rgba(0,0,0,0.45),
+      inset 1px 0 0 rgba(255,255,255,0.05),
+      -4px 0 80px rgba(61,232,244,0.04);
+  }
+
+  /* Logo at top of sidebar */
+  .sb-logo {
+    height: 30px; width: auto;
+    object-fit: contain;
+    filter: brightness(20) saturate(0);
+    opacity: .55;
+  }
+
+  /* Nav links — vertical column */
+  .sb-links {
+    display: flex; flex-direction: column;
+    align-items: center; gap: .3rem; list-style: none;
+  }
+  .sb-link {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: .6rem .4rem; min-width: 54px; min-height: 54px; justify-content: center;
+    border-radius: 13px;
+    font-size: .44rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-low); transition: background .25s ease, color .25s ease;
+    position: relative;
+  }
+  .sb-link .sb-ico { font-size: 1.05rem; line-height: 1; margin-bottom: 2px; }
+  @media (hover: hover) { .sb-link:hover { background: var(--cyan-dim); color: var(--cyan); } }
+  .sb-link.active { background: var(--cyan-dim); color: var(--cyan); }
+  /* Active indicator — right-edge glow bar */
+  .sb-link.active::before {
+    content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    width: 3px; height: 22px; border-radius: 3px 0 0 3px;
+    background: var(--cyan); box-shadow: 0 0 12px var(--cyan);
+  }
+
+  /* WhatsApp icon at bottom — no extra wrapper needed */
+  .sb-wa-wrap { display: contents; }
+  .sb-wa {
+    width: 38px; height: 38px; border-radius: 11px; display: flex;
+    align-items: center; justify-content: center; font-size: 1.05rem;
+    background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.22);
+    transition: background .25s ease;
+  }
+  @media (hover: hover) { .sb-wa:hover { background: rgba(37,211,102,0.2); } }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §7  GLOBAL LAYOUT & SHARED TYPOGRAPHY
+──────────────────────────────────────────────────────────────── */
+.wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 var(--pad); }
+.section { position: relative; }
+
+.s-label {
+  display: inline-flex; align-items: center; gap: .7rem;
+  font-size: .57rem; font-weight: 400; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: .8rem;
+}
+.s-label::before { content: ''; width: 22px; height: 1px; flex-shrink: 0; background: linear-gradient(to right, var(--cyan), transparent); }
+
+.s-title {
+  font-family: var(--serif); font-weight: 900;
+  font-size: clamp(2.2rem, 5.5vw, 4.6rem); line-height: .92; color: var(--cream);
+}
+.s-title em { color: var(--gold); font-style: italic; }
+
+.s-desc {
+  font-size: clamp(.87rem, 1.4vw, 1rem); font-weight: 300;
+  color: var(--ink-mid); line-height: 1.85;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §8  SCROLL REVEAL
+──────────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .8s var(--spring), transform .8s var(--spring);
+}
+.reveal.left  { transform: translateX(-28px); }
+.reveal.right { transform: translateX(28px); }
+.reveal.in    { opacity: 1; transform: none; }
+.d1 { transition-delay: .10s; }
+.d2 { transition-delay: .20s; }
+.d3 { transition-delay: .32s; }
+.d4 { transition-delay: .44s; }
+.d5 { transition-delay: .56s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity:1 !important; transform:none !important; transition:none !important; animation:none !important; }
+  .marquee-track, .hero-ghost { animation-play-state: paused !important; }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §9  HERO — cinematic full-screen, multi-layer parallax
+──────────────────────────────────────────────────────────────── */
+#hero {
+  position: relative;
+  width: 100%;
+  /* 100svh with JS --svh fallback for IABs */
+  height: 100svh;
+  height: calc(var(--svh, 1vh) * 100);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  justify-content: flex-end; align-items: flex-start;
+  padding: 0 var(--pad) max(4rem, calc(var(--safe-b) + var(--dock-h) + 1.5rem));
+}
+@media (min-width: 960px) { #hero { padding-bottom: 5.5rem; } }
+@media (max-height: 500px) and (orientation: landscape) {
+  #hero { height: auto; min-height: 100svh; padding-bottom: 2rem; }
+  .hero-title { font-size: clamp(2rem, 7vw, 4rem) !important; }
+  #hero-scroll { display: none !important; }
+}
+
+/* Parallax video — deepest layer */
+.hero-media { position: absolute; inset: 0; background: var(--forest-ink); }
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transform: translateZ(0) scale(1.1); /* extra scale = parallax travel room */
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  will-change: transform;
+}
+/* Scrim stack */
+.hero-scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 85% 65% at 18% 55%, transparent 0%, rgba(7,8,12,0.55) 100%),
+    linear-gradient(to top,  rgba(7,8,12,0.95) 0%, rgba(7,8,12,0.35) 42%, rgba(7,8,12,0.10) 70%),
+    linear-gradient(to right, rgba(7,8,12,0.70) 0%, transparent 56%);
+}
+/* Ambient bioluminescent glow left-edge */
+.hero-cyan-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 50% 75% at -5% 58%, rgba(61,232,244,0.08) 0%, transparent 70%);
+}
+
+/* Oversized kinetic ghost — parallax mid-layer */
+.hero-ghost {
+  position: absolute; right: -0.06em; top: 50%; transform: translateY(-50%);
+  font-family: var(--serif);
+  font-size: clamp(12rem, 33vw, 30rem);
+  font-weight: 900; font-style: italic; line-height: .88;
+  color: transparent; -webkit-text-stroke: 1px rgba(61,232,244,0.065);
+  pointer-events: none; user-select: none; white-space: nowrap; overflow: hidden;
+  will-change: transform;
+  animation: ghost-drift 18s ease-in-out infinite alternate;
+}
+@keyframes ghost-drift {
+  from { transform: translateY(-50%) translateX(0); }
+  to   { transform: translateY(-52%) translateX(-20px); }
+}
+
+/* Hero content — foreground layer */
+.hero-content { position: relative; z-index: 2; max-width: 720px; will-change: transform, opacity; }
+@media (min-width: 960px) { .hero-content { padding-top: max(180px, 15vh); } }
+.hero-eyebrow {
+  display: flex; align-items: center; gap: .9rem; flex-wrap: wrap;
+  margin-bottom: 1.8rem;
+  opacity: 0; animation: rise .9s var(--spring) .12s forwards;
+}
+.ey-line { width: 30px; height: 1px; background: var(--cyan); opacity: .75; flex-shrink: 0; }
+.ey-text {
+  font-size: .57rem; font-weight: 300; letter-spacing: .35em;
+  text-transform: uppercase; color: var(--cyan);
+}
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900; line-height: .87; color: var(--cream);
+  margin-bottom: 2rem; display: flex; flex-direction: column;
+}
+.hero-title em { color: var(--gold); font-style: italic; }
+.hl {
+  display: block; clip-path: inset(0 0 115% 0);
+  animation: clip-up 1s var(--spring) forwards;
+}
+.hl:nth-child(2) { animation-delay: .18s; }
+.hl:nth-child(3) { animation-delay: .34s; }
+@keyframes clip-up {
+  from { clip-path: inset(0 0 115% 0); }
+  to   { clip-path: inset(0 0 -5%  0); }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-sub {
+  font-size: clamp(.9rem, 1.5vw, 1.04rem); font-weight: 300;
+  color: var(--ink-mid); line-height: 1.85; max-width: 420px; margin-bottom: 2.5rem;
+  opacity: 0; animation: rise .9s var(--spring) .5s forwards;
+}
+.hero-ctas {
+  display: flex; gap: .9rem; flex-wrap: wrap;
+  opacity: 0; animation: rise .9s var(--spring) .65s forwards;
+}
+.hero-partner-tag {
+  font-size: clamp(.72rem, 1.15vw, .84rem); font-weight: 300;
+  letter-spacing: .04em; font-style: italic;
+  color: var(--gold); margin-bottom: 1.5rem; margin-top: -.6rem;
+  opacity: 0; animation: rise .9s var(--spring) .42s forwards;
+}
+
+/* Scroll indicator */
+#hero-scroll {
+  position: absolute;
+  bottom: max(6rem, calc(var(--dock-h) + 2.2rem));
+  right: 2rem; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  color: var(--ink-low); font-size: .52rem; letter-spacing: .28em; text-transform: uppercase;
+  animation: float 3s ease-in-out infinite;
+}
+@media (min-width: 960px) { #hero-scroll { bottom: 3rem; } }
+.scroll-beam { width: 1px; height: 42px; background: linear-gradient(to bottom, var(--cyan), transparent); }
+@keyframes float {
+  0%,100% { transform: translateY(0);  }
+  50%     { transform: translateY(9px); }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §10  GOLD MARQUEE TICKER
+──────────────────────────────────────────────────────────────── */
+.marquee-strip {
+  overflow: hidden; padding: .65rem 0;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-hi) 50%, var(--gold) 100%);
+  box-shadow: 0 0 50px rgba(201,149,43,0.35);
+  position: relative; z-index: 3;
+}
+.marquee-track {
+  display: flex; width: max-content;
+  animation: mrun 24s linear infinite;
+  will-change: transform;
+}
+.m-item { font-size: .57rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--forest-ink); white-space: nowrap; padding: 0 2.2rem; }
+.m-sep  { color: var(--forest); opacity: .4; flex-shrink: 0; }
+@keyframes mrun {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §11  TRIPS — Horizontal CSS scroll-snap carousel
+──────────────────────────────────────────────────────────────── */
+#trips { padding: 6rem 0 5rem; overflow: hidden; }
+
+.trips-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.2rem;
+  margin-bottom: 2.5rem;
+  padding: 0 var(--pad);
+}
+.trips-right { display: flex; flex-direction: column; align-items: flex-end; gap: .6rem; }
+.swipe-hint {
+  display: flex; align-items: center; gap: .4rem;
+  font-size: .57rem; font-weight: 400; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-low);
+  animation: nudge 2.5s ease-in-out infinite;
+}
+@keyframes nudge {
+  0%,100% { opacity:.38; transform:translateX(0); }
+  50%     { opacity:.85; transform:translateX(7px); }
+}
+.trip-count {
+  font-family: var(--serif); font-size: .8rem; font-style: italic;
+  color: var(--ink-low);
+}
+
+/* The scrollable rail */
+#trips-rail {
+  display: flex; gap: 1.1rem;
+  overflow-x: auto; overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 1.5rem var(--pad) 3rem;
+  margin: -1.5rem 0 -3rem; /* compensate so glow isn't clipped */
+}
+#trips-rail::-webkit-scrollbar { display: none; }
+
+/* Individual glass card */
+.trip-card {
+  flex: 0 0 clamp(275px, 75vw, 355px);
+  scroll-snap-align: start;
+  position: relative;
+  display: flex; flex-direction: column;
+  border-radius: 22px; overflow: hidden;
+  cursor: pointer;
+
+  /* Solid replacement for Glassmorphism */
+  background: rgba(18, 20, 28, 0.85);
+  border: 1px solid var(--glass-border);
+
+  /* Ambient cyan glow */
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.5),
+    0 0 0 0.5px rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 60px rgba(61,232,244,0.07);
+
+transition: transform .45s var(--spring), box-shadow .45s ease;
+}
+
+@media (hover: hover) {
+  .trip-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+      0 28px 64px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(61,232,244,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.13),
+      0 0 90px rgba(61,232,244,0.15);
+  }
+  .trip-card:hover .tc-photo { transform: scale(1.06); }
+  .trip-card:hover .tc-shimmer { opacity: 1; }
+}
+
+/* Top glowing line */
+.tc-glow-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: .65;
+}
+/* Shimmer overlay */
+.tc-shimmer {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(135deg, rgba(61,232,244,0.05) 0%, transparent 60%);
+  opacity: 0; transition: opacity .4s ease;
+}
+/* Photo */
+.tc-photo-wrap { aspect-ratio: 16/9; overflow: hidden; flex-shrink: 0; }
+.tc-photo { width: 100%; height: 100%; object-fit: cover; transition: transform .65s var(--spring); }
+
+/* Body */
+.tc-body { padding: 1.35rem 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.tc-tag {
+  font-size: .53rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cyan); border: 1px solid var(--cyan-border); border-radius: 99px;
+  padding: .18rem .65rem; display: inline-block; margin-bottom: 1rem;
+  background: var(--cyan-dim); width: fit-content;
+}
+.tc-name {
+  font-family: var(--serif); font-size: 1.42rem; font-weight: 700;
+  color: var(--cream); line-height: 1.1; flex: 1; margin-bottom: .75rem;
+  overflow-wrap: break-word; word-break: break-word;
+}
+.tc-meta { display: flex; flex-direction: column; gap: .28rem; margin-bottom: 1.3rem; }
+.tc-meta span { font-size: .76rem; font-weight: 300; color: var(--ink-low); }
+
+/* Join button */
+.btn-join {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: var(--cyan-dim); color: var(--cyan);
+  border: 1px solid var(--cyan-border); border-radius: 99px;
+  padding: .55rem 1.1rem; min-height: 44px;
+  font-size: max(.65rem, 14px); font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  align-self: flex-start; cursor: pointer;
+  transition: background .3s ease, color .3s ease;
+}
+@media (hover: hover) { .btn-join:hover { background: var(--cyan); color: var(--forest-ink); } }
+
+/* Carousel state messages */
+.rail-msg {
+  flex: 0 0 min(calc(100vw - 2 * var(--pad)), 360px);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 260px; font-size: .88rem; font-weight: 300;
+  color: var(--ink-low); text-align: center; padding: 2rem;
+  background: var(--glass); border-radius: 22px;
+  border: 1px solid var(--glass-border);
+}
+.rail-err { color: rgba(255,110,110,0.7); }
+
+/* ────────────────────────────────────────────────────────────────
+   §12  ABOUT — Parallax visual + glass stat + pillar grid
+──────────────────────────────────────────────────────────────── */
+#about {
+  padding: 7.5rem 0 3rem;
+  background: linear-gradient(180deg, var(--forest-ink) 0%, var(--forest-deep) 100%);
+  overflow: hidden;
+}
+.about-grid { display: grid; grid-template-columns: 1fr; gap: 3.5rem; align-items: center; }
+@media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; gap: 4.5rem; } }
+@media (min-width: 1060px) { .about-grid { grid-template-columns: 1.1fr .9fr; gap: 6.5rem; } }
+
+/* Image slider */
+.about-visual { position: relative; }
+.about-img-wrap {
+  position: relative; border-radius: 22px; overflow: hidden;
+  cursor: grab; user-select: none;
+}
+.about-img-wrap:active { cursor: grabbing; }
+.about-img {
+  width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block;
+  border-radius: 22px;
+  transform: translateZ(0); backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity .25s ease;
+}
+/* Glass gradient at bottom of image */
+.about-img-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 38%;
+  background: linear-gradient(to top, rgba(7,8,12,.82) 0%, transparent 100%);
+  border-radius: 0 0 22px 22px; pointer-events: none;
+}
+/* Offset decorative cyan border */
+.about-img-frame {
+  position: absolute; inset: -1.1rem 0 0 -1.1rem;
+  border: 1px solid rgba(61,232,244,0.13); border-radius: 26px;
+  pointer-events: none; transition: transform .5s var(--spring);
+}
+@media (hover: hover) { .about-visual:hover .about-img-frame { transform: translate(-5px,-5px); } }
+/* Floating glass stat */
+.about-stat-card {
+  position: absolute; bottom: -1.8rem; right: -1rem;
+  padding: 1.3rem 1.6rem; border-radius: 18px;
+  background: var(--glass-hi);
+  backdrop-filter: var(--glass-blur-s);
+  -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 16px 44px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.09), 0 0 44px rgba(61,232,244,.1);
+  min-width: 148px;
+}
+.stat-n { font-family: var(--serif); font-size: 2.9rem; font-weight: 900; color: var(--gold); line-height: 1; }
+.stat-n sup { font-size: 1.3rem; vertical-align: super; }
+.stat-l { font-size: .68rem; font-weight: 300; color: var(--ink-low); margin-top: .3rem; line-height: 1.5; }
+/* Swipe badge */
+.about-swipe {
+  position: absolute; bottom: .9rem; left: 50%; transform: translateX(-50%);
+  font-size: .51rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-mid);
+  background: var(--glass); backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border);
+  padding: .28rem .7rem; border-radius: 99px; pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Text side */
+.about-text .s-label { color: var(--cyan); }
+.about-text .s-title { color: var(--cream); margin-bottom: 1.5rem; }
+.about-text p { font-size: max(.9rem,15px); font-weight: 300; color: var(--ink-mid); line-height: 1.95; margin-bottom: 1rem; }
+
+/* Pillars */
+.pillars { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-top: 2rem; }
+@media (max-width: 360px) { .pillars { grid-template-columns: 1fr; } }
+.pillar {
+  padding: 1rem 1.1rem; border-radius: 14px;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: transform .35s var(--spring), border-color .35s ease, box-shadow .35s ease;
+}
+@media (hover: hover) {
+  .pillar:hover { transform: translateY(-5px); border-color: var(--cyan-border); box-shadow: 0 12px 32px rgba(0,0,0,.4), 0 0 26px rgba(61,232,244,.12); }
+  .pillar:hover .p-ico { transform: scale(1.12); }
+}
+.p-ico { font-size: 1.2rem; margin-bottom: .45rem; display: inline-block; transition: transform .35s var(--spring); }
+.pillar h4 { font-size: max(.8rem,14px); font-weight: 500; color: var(--cream); margin-bottom: .18rem; }
+.pillar p  { font-size: max(.7rem,13px); font-weight: 300; color: var(--ink-low); }
+
+/* ────────────────────────────────────────────────────────────────
+   §13  MANIFESTO — full-bleed cinematic interlude
+──────────────────────────────────────────────────────────────── */
+#manifesto {
+  padding: 3.5rem var(--pad) 8rem;
+  background: var(--forest-deep);
+  position: relative; overflow: hidden;
+}
+.man-glow-l { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 85% at -8% 50%, rgba(61,232,244,0.07) 0%, transparent 70%); }
+.man-glow-r { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 50% 70% at 108% 50%, rgba(201,149,43,0.07) 0%, transparent 70%); }
+.man-ghost {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-family: var(--serif); font-size: clamp(12rem,36vw,30rem);
+  font-weight: 900; font-style: italic; line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(61,232,244,0.05);
+  pointer-events: none; user-select: none; white-space: nowrap;
+}
+.man-inner { position: relative; z-index: 2; max-width: 840px; }
+.man-rule { width: 1px; height: 68px; background: linear-gradient(to bottom, var(--cyan), transparent); margin-bottom: 2.5rem; }
+.man-q {
+  font-family: var(--serif); font-size: clamp(2rem,5vw,4rem);
+  font-weight: 900; font-style: italic; line-height: 1.1;
+  color: var(--cream); margin-bottom: 1.8rem;
+}
+.man-q em { color: var(--gold); font-style: normal; }
+.man-body {
+  font-size: clamp(.88rem,1.4vw,1rem); font-weight: 300;
+  color: var(--ink-mid); line-height: 2; max-width: 520px; margin-bottom: 2.5rem;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §14  GEAR / MERCHANT
+──────────────────────────────────────────────────────────────── */
+#merchant {
+  padding: 7rem 0;
+  background: linear-gradient(180deg, var(--forest-deep) 0%, var(--forest-ink) 100%);
+  overflow: hidden;
+}
+.merch-head { padding: 0 var(--pad); margin-bottom: 2.8rem; }
+.merch-layout { display: grid; grid-template-columns: 1fr; gap: 1.1rem; padding: 0 var(--pad); }
+@media (min-width: 580px) { .merch-layout { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 960px) { .merch-layout { grid-template-columns: 5fr 7fr; gap: 1.4rem; } }
+
+/* Featured 360 card */
+.merch-hero {
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border); border-radius: 24px;
+  overflow: hidden; position: relative;
+  box-shadow: 0 8px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08), 0 0 80px rgba(201,149,43,0.07);
+}
+/* Dynamic merch sub-grid */
+.merch-sub { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
+@media (min-width: 960px) { .merch-sub { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 580px) and (max-width: 959px) { .merch-sub { grid-template-columns: 1fr 1fr; } }
+
+.merch-card {
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border); border-radius: 18px;
+  overflow: hidden; transition: transform .42s var(--spring), border-color .42s ease, box-shadow .42s ease;
+}
+@media (hover: hover) {
+  .merch-card:hover { transform: translateY(-6px); border-color: var(--gold-border); box-shadow: 0 24px 56px rgba(0,0,0,.5), 0 0 40px rgba(201,149,43,.12); }
+  .merch-card:hover .mc-img img { transform: scale(1.06); }
+}
+.mc-badge {
+  position: absolute; top: .85rem; left: .85rem; z-index: 3;
+  background: var(--gold); color: var(--forest-ink);
+  font-size: .51rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  padding: .2rem .55rem; border-radius: 99px;
+}
+.mc-img { aspect-ratio: 4/3; overflow: hidden; }
+.mc-img img { width:100%; height:100%; object-fit:cover; transition: transform .55s var(--spring); }
+.mc-body { padding: 1.2rem 1.3rem; }
+.mc-name { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--cream); margin-bottom: .3rem; overflow-wrap: break-word; }
+.mc-price { font-family: var(--serif); font-size: 1.4rem; color: var(--gold); margin-bottom: .9rem; }
+.merch-err { color: rgba(255,110,110,.65); font-size: .82rem; font-weight:300; padding: 1.5rem; }
+
+/* 360° Viewer */
+#ts-iframe-wrap {
+  position: relative; width: 100%; height: 320px; overflow: hidden;
+  touch-action: none; /* Stops the main page from scrolling during rotation */
+}
+#ts-iframe-wrap iframe {
+  width: 100%; height: 100%; border: none; display: block;
+}
+.ts-click-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .3s ease;
+  background: rgba(7,8,12,0.4);
+  pointer-events: none; /* Allows drags to pass through the dark overlay to the shirt */
+}
+/* Triggered by JS when tapped */
+.ts-click-overlay.show { opacity: 1; }
+
+.ts-overlay-label {
+  background: var(--glass-hi);
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--gold-border);
+  color: var(--gold); font-size: .6rem; letter-spacing: .18em;
+  text-transform: uppercase; padding: .6rem 1.2rem; border-radius: 99px;
+  pointer-events: auto; /* Makes ONLY the button itself clickable */
+  cursor: pointer; text-decoration: none;
+}
+
+
+#ts-scene {
+  aspect-ratio: 1; max-height: 300px;
+  perspective: 900px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: grab; user-select: none; touch-action: none;
+  background: radial-gradient(ellipse at center, rgba(201,149,43,0.06) 0%, transparent 70%);
+}
+#ts-scene:active { cursor: grabbing; }
+#ts-inner { transform-style: preserve-3d; width: 62%; max-width: 195px; aspect-ratio: 195/215; position: relative; }
+.ts-face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.ts-face img { width:100%; height:100%; object-fit:contain; }
+.ts-face.back { transform: rotateY(180deg); }
+.ts-hint { font-size:.52rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-low); text-align:center; padding:.5rem; background:rgba(0,0,0,.14); }
+
+/* ────────────────────────────────────────────────────────────────
+   §14.5  REVIEWS
+──────────────────────────────────────────────────────────────── */
+#reviews {
+  padding: 7rem 0;
+  background: linear-gradient(180deg, var(--forest-ink) 0%, var(--forest-mid) 100%);
+  overflow: hidden;
+}
+.reviews-head { margin-bottom: 2.8rem; }
+.reviews-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+@media (min-width: 580px) { .reviews-grid { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 960px) { .reviews-grid { grid-template-columns: repeat(3,1fr); } }
+
+.review-card {
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border); border-radius: 18px;
+  padding: 1.5rem 1.6rem;
+  transition: transform .4s var(--spring), border-color .4s ease, box-shadow .4s ease;
+}
+@media (hover: hover) {
+  .review-card:hover { transform: translateY(-5px); border-color: var(--gold-border); box-shadow: 0 16px 44px rgba(0,0,0,.45), 0 0 36px rgba(201,149,43,.1); }
+}
+.review-stars { color: var(--gold); font-size: .95rem; margin-bottom: .75rem; letter-spacing: .1em; }
+.review-msg {
+  font-size: max(.85rem,14px); font-weight: 300; color: var(--ink-mid);
+  line-height: 1.85; margin-bottom: 1.2rem; font-style: italic;
+}
+.review-author { display: flex; align-items: center; gap: .75rem; }
+.review-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan-dim), var(--gold-glow));
+  border: 1px solid var(--gold-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 700; color: var(--gold); flex-shrink: 0;
+}
+.review-info { min-width: 0; }
+.review-name { font-size: .84rem; font-weight: 500; color: var(--cream); }
+.review-date { font-size: .68rem; font-weight: 300; color: var(--ink-low); margin-top: .1rem; }
+.reviews-empty {
+  padding: 2.5rem; text-align: center; font-size: .88rem; font-weight: 300;
+  color: var(--ink-low); grid-column: 1/-1;
+  background: var(--glass); border: 1px solid var(--glass-border); border-radius: 18px;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   §14.6  FAQ
+──────────────────────────────────────────────────────────────── */
+#faq {
+  padding: 7rem 0 4rem;
+  background: linear-gradient(180deg, var(--forest-mid) 0%, var(--forest-ink) 100%);
+  overflow: hidden;
+}
+.faq-head { margin-bottom: 2.8rem; }
+.faq-list { display: flex; flex-direction: column; gap: .75rem; }
+.faq-item {
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border); border-radius: 14px;
+  overflow: hidden;
+}
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 1.4rem; cursor: pointer; gap: 1rem;
+  font-size: max(.88rem,14px); font-weight: 500; color: var(--cream);
+  min-height: 56px; user-select: none;
+  transition: background .25s ease;
+}
+@media (hover: hover) { .faq-q:hover { background: var(--cyan-dim); } }
+.faq-q.open { color: var(--cyan); }
+.faq-chevron { flex-shrink: 0; font-size: .75rem; color: var(--ink-low); transition: transform .35s var(--spring); }
+.faq-q.open .faq-chevron { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height .45s var(--spring);
+}
+.faq-a-inner { padding: 0 1.4rem 1.1rem; font-size: max(.83rem,13px); font-weight: 300; color: var(--ink-mid); line-height: 1.85; }
+.faq-empty { padding: 2rem; text-align: center; font-size: .88rem; font-weight: 300; color: var(--ink-low); }
+
+/* ────────────────────────────────────────────────────────────────
+   §15  SOCIAL / CONNECT
+──────────────────────────────────────────────────────────────── */
+#social { padding: 7rem 0; background: var(--forest-ink); }
+.social-c { max-width: 500px; margin: 0 auto; padding: 0 var(--pad); text-align: center; }
+.social-logo { height: 48px; width:auto; filter:brightness(20) saturate(0); opacity:.55; margin:0 auto 1.5rem; }
+.social-stack { margin-top: 2.2rem; display: flex; flex-direction: column; gap: .65rem; }
+
+.soc-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: .9rem 1.2rem; border-radius: 16px; min-height: 44px;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  border: 1px solid var(--glass-border); color: var(--cream);
+  transition: transform .3s var(--spring), border-color .3s ease, box-shadow .3s ease;
+}
+@media (hover: hover) {
+  .soc-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.18); box-shadow: 0 12px 32px rgba(0,0,0,.4); }
+}
+.soc-card.wa { background: rgba(37,211,102,.07); border-color: rgba(37,211,102,.2); }
+@media (hover: hover) { .soc-card.wa:hover { background: rgba(37,211,102,.14); } }
+.soc-card.ig { background: linear-gradient(135deg, rgba(131,58,180,.17),rgba(253,29,29,.17),rgba(252,176,69,.17)); border-color: transparent; }
+.soc-ico  { width:40px; height:40px; border-radius:10px; background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+.soc-txt  { flex:1; min-width:0; text-align:left; }
+.soc-txt b     { display:block; font-size:.85rem; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.soc-txt span  { display:block; font-size:.72rem; font-weight:300; opacity:.43; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.soc-arr { font-size:.82rem; opacity:.24; transition:all .3s ease; flex-shrink:0; }
+@media (hover: hover) { .soc-card:hover .soc-arr { opacity:.85; transform:translateX(4px); } }
+
+/* ────────────────────────────────────────────────────────────────
+   §16  FOOTER
+──────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--forest-ink);
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding: 3.5rem 0 max(2rem, var(--safe-b));
+}
+.ft-grid {
+  display: grid; grid-template-columns: 1fr; gap: 2rem;
+  padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,.05); margin-bottom: 1.5rem;
+}
+@media (min-width: 600px) { .ft-grid { grid-template-columns: 2fr 1fr; } }
+@media (min-width: 900px) { .ft-grid { grid-template-columns: 2fr 1fr 1fr; gap: 3.5rem; } }
+.ft-logo { height: 40px; width:auto; filter:brightness(20) saturate(0); opacity:.5; margin-bottom:1rem; }
+.ft-brand p { font-size:.8rem; font-weight:300; color:rgba(240,235,224,.26); line-height:1.9; max-width:270px; }
+.ft-col h5 { font-size:.55rem; letter-spacing:.26em; text-transform:uppercase; color:rgba(240,235,224,.2); margin-bottom:1rem; }
+.ft-col a { display:flex; align-items:center; color:rgba(240,235,224,.42); font-size:.8rem; font-weight:300; min-height:44px; transition:color .25s ease; }
+@media (hover: hover) { .ft-col a:hover { color:var(--gold); } }
+.ft-bottom { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:.7rem; }
+.ft-bottom p { font-size:.67rem; color:rgba(240,235,224,.14); }
+.ft-motto { font-family:var(--serif); font-style:italic; color:rgba(240,235,224,.1); font-size:.82rem; }
+
+/* ────────────────────────────────────────────────────────────────
+   §17  SHARED BUTTONS
+──────────────────────────────────────────────────────────────── */
+.btn-gold {
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gold); color: var(--forest-ink);
+  padding: .88rem 2.2rem; min-height: 44px;
+  border: 1.5px solid var(--gold); border-radius: 99px;
+  font-size: max(.7rem,14px); font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+  white-space: nowrap; cursor: pointer;
+  transition: background .35s ease, box-shadow .35s ease;
+}
+@media (hover: hover) { .btn-gold:hover { background: var(--gold-hi); box-shadow: 0 0 30px var(--gold-glow); } }
+.btn-glass {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--glass); color: var(--ink);
+  padding: .88rem 2.2rem; min-height: 44px;
+  border: 1px solid var(--glass-border); border-radius: 99px;
+  font-size: max(.7rem,14px); font-weight: 400; letter-spacing: .18em; text-transform: uppercase;
+  white-space: nowrap; cursor: pointer;
+  backdrop-filter: var(--glass-blur-s); -webkit-backdrop-filter: var(--glass-blur-s);
+  transition: border-color .3s ease, background .3s ease, color .3s ease;
+}
+@media (hover: hover) { .btn-glass:hover { border-color: var(--cyan-border); background: var(--cyan-dim); color: var(--cyan); } }
+.btn-buy {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gold); color: var(--forest-ink);
+  padding: .58rem 1.35rem; min-height: 44px; border-radius: 99px;
+  font-size: max(.67rem,14px); font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer; transition: background .3s ease;
+}
+@media (hover: hover) { .btn-buy:hover { background: var(--gold-hi); } }
+
+/* ────────────────────────────────────────────────────────────────
+   §18  SECTION NUMBER GHOST
+──────────────────────────────────────────────────────────────── */
+.sec-ghost {
+  position: absolute; pointer-events: none; user-select: none;
+  font-family: var(--serif); font-size: clamp(8rem,22vw,18rem);
+  font-weight: 900; line-height: 1; z-index: 0;
+  color: transparent; -webkit-text-stroke: 1px rgba(61,232,244,0.05);
+}
+.sec-ghost.r { right: -.02em; top: 1rem; }
+.sec-ghost.l { left:  -.02em; top: 1rem; }
+
+/* ────────────────────────────────────────────────────────────────
+   §20  HERO LOGO — absolute within hero, scrolls away naturally
+──────────────────────────────────────────────────────────────── */
+#top-logo {
+  position: absolute;
+  top: max(2rem, env(safe-area-inset-top));
+  left: 50%; transform: translateX(-50%);
+  z-index: 950;
+    width: clamp(240px, 40vw, 400px);
+  height: auto;
+  object-fit: contain;
+  filter: brightness(20) saturate(0);
+  opacity: .72;
+  pointer-events: none;
+  animation: logo-in .8s var(--spring) .1s both;
+}
+@keyframes logo-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(-14px); }
+  to   { opacity: .72; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Short / wide laptop fix (e.g. 1024×600) ──────────────── */
+@media (min-width: 960px) and (max-height: 700px) {
+  #top-logo {
+    width: clamp(160px, 25vw, 280px);
+    top: max(1rem, env(safe-area-inset-top));
+  }
+  .hero-title {
+    font-size: clamp(2.2rem, 6vw, 4rem);
+  }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="c-dot" id="c-dot" aria-hidden="true"></div>
+<div class="c-ring" id="c-ring" aria-hidden="true"></div>
+
+<!-- ================================================================
+     FLOATING BOTTOM DOCK — mobile
+================================================================ -->
+<nav id="dock" role="navigation" aria-label="Main navigation">
+
+  <a href="#trips" class="dock-btn active" data-sec="trips" aria-label="Trips">
+    <span class="dock-ico">🧭</span>
+    <span class="dock-lbl">Trips</span>
+  </a>
+
+  <a href="#about" class="dock-btn" data-sec="about" aria-label="Our story">
+    <span class="dock-ico">🌿</span>
+    <span class="dock-lbl">Story</span>
+  </a>
+
+  <a href="#hero" class="dock-btn" aria-label="Home">
+    <img src="logo.png" alt="Ashana Journeys" class="dock-logo-img"/>
+  </a>
+
+  <a href="#merchant" class="dock-btn" data-sec="merchant" aria-label="Gear store">
+    <span class="dock-ico">🎽</span>
+    <span class="dock-lbl">Gear</span>
+  </a>
+
+  <a href="#reviews" class="dock-btn" data-sec="reviews" aria-label="Reviews">
+    <span class="dock-ico">⭐</span>
+    <span class="dock-lbl">Reviews</span>
+  </a>
+
+  <a href="#social" class="dock-btn" data-sec="social" aria-label="Connect">
+    <span class="dock-ico">✦</span>
+    <span class="dock-lbl">Connect</span>
+  </a>
+
+</nav>
+
+<!-- ================================================================
+     FLOATING SIDE PANEL — desktop only
+================================================================ -->
+<nav id="sidebar" role="navigation" aria-label="Side navigation">
+
+  <img src="logo.png" alt="Ashana Journeys" class="sb-logo"/>
+
+  <ul class="sb-links" role="list">
+    <li><a href="#trips"    class="sb-link active" data-sec="trips"    aria-label="Trips"><span class="sb-ico">🧭</span><span>Trips</span></a></li>
+    <li><a href="#about"    class="sb-link"         data-sec="about"    aria-label="Story"><span class="sb-ico">🌿</span><span>Story</span></a></li>
+    <li><a href="#merchant" class="sb-link"         data-sec="merchant" aria-label="Gear"><span class="sb-ico">🎽</span><span>Gear</span></a></li>
+    <li><a href="#reviews"  class="sb-link"         data-sec="reviews"  aria-label="Reviews"><span class="sb-ico">⭐</span><span>Reviews</span></a></li>
+    <li><a href="#faq"      class="sb-link"         data-sec="faq"      aria-label="FAQ"><span class="sb-ico">❓</span><span>FAQ</span></a></li>
+    <li><a href="#social"   class="sb-link"         data-sec="social"   aria-label="Connect"><span class="sb-ico">✦</span><span>Connect</span></a></li>
+  </ul>
+
+  <div class="sb-wa-wrap">
+    <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="sb-wa" aria-label="WhatsApp us">💬</a>
+  </div>
+
+</nav>
+
+<!-- ================================================================
+     MAIN CONTENT
+================================================================ -->
+<main>
+
+  <!-- §A  HERO ──────────────────────────────────────── -->
+  <section id="hero" aria-label="Ashana Journeys — Hero">
+
+    <!-- Absolute hero logo — scrolls away with the hero naturally -->
+    <img id="top-logo" src="logo.png" alt="Ashana Journeys" loading="eager"/>
+
+    <!-- Deep parallax video layer -->
+    <div class="hero-media" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+        <source src="hero.mp4" type="video/mp4"/>
+      </video>
+    </div>
+
+    <div class="hero-scrim"    aria-hidden="true"></div>
+    <div class="hero-cyan-glow" aria-hidden="true"></div>
+
+    <!-- Mid-layer kinetic ghost typography -->
+    <div class="hero-ghost" aria-hidden="true">Journey</div>
+
+    <!-- Foreground content -->
+    <div class="hero-content">
+      <div class="hero-eyebrow" aria-hidden="true">
+        <div class="ey-line"></div>
+        <span class="ey-text">TRIP HOST. GROUP TRAVEL HOST.</span>
+      </div>
+      <p class="hero-partner-tag">With experienced guides and trusted partners.</p>
+      <h1 class="hero-title">
+        <span class="hl">Adventure.</span>
+        <span class="hl"><em>Real People.</em></span>
+        <span class="hl">Real Places.</span>
+      </h1>
+      <p class="hero-sub">
+        Curated group hikes, diving and surfing trips across Malaysia and the world.
+        Come alone or with family. You're joining a community.
+      </p>
+      <div class="hero-ctas">
+        <a href="#trips" class="btn-gold">Explore Trips</a>
+        <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="btn-glass">WhatsApp Us</a>
+      </div>
+    </div>
+
+    <div id="hero-scroll" aria-hidden="true">
+      <div class="scroll-beam"></div>
+      <span>Scroll</span>
+    </div>
+
+  </section>
+
+  <!-- §B  MARQUEE ───────────────────────────────────── -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="m-item">Group Hikes</span><span class="m-sep">✦</span>
+      <span class="m-item">Scuba Diving</span><span class="m-sep">✦</span>
+      <span class="m-item">Surfing Trips</span><span class="m-sep">✦</span>
+      <span class="m-item">Cultural Tours</span><span class="m-sep">✦</span>
+      <span class="m-item">Family Getaways</span><span class="m-sep">✦</span>
+      <span class="m-item">International Adventures</span><span class="m-sep">✦</span>
+      <span class="m-item">Group Hikes</span><span class="m-sep">✦</span>
+      <span class="m-item">Scuba Diving</span><span class="m-sep">✦</span>
+      <span class="m-item">Surfing Trips</span><span class="m-sep">✦</span>
+      <span class="m-item">Cultural Tours</span><span class="m-sep">✦</span>
+      <span class="m-item">Family Getaways</span><span class="m-sep">✦</span>
+      <span class="m-item">International Adventures</span><span class="m-sep">✦</span>
+    </div>
+  </div>
+
+  <!-- §C  TRIPS — Horizontal snap carousel ──────────── -->
+  <section id="trips" class="section">
+    <div class="sec-ghost r" aria-hidden="true">01</div>
+
+    <div class="trips-head reveal">
+      <div>
+        <div class="s-label">Upcoming Adventures</div>
+        <h2 class="s-title">Join Our <em>Trips</em></h2>
+      </div>
+      <div class="trips-right">
+        <p class="s-desc" style="text-align:right; max-width:280px;">
+          Snag your spot before they fill — swipe through live trips.
+        </p>
+        <div class="swipe-hint" aria-hidden="true">Swipe <span style="font-size:1.1em;">→</span></div>
+      </div>
+    </div>
+
+    <!-- Horizontal scroll rail — Firebase populates this -->
+    <div id="trips-rail" role="list" aria-label="Available trips" aria-live="polite">
+      <div class="rail-msg" role="status">Loading trips…</div>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; padding:.7rem var(--pad) 0;" aria-live="polite">
+      <span class="trip-count" id="trip-count"></span>
+    </div>
+  </section>
+
+  <!-- §D  ABOUT ─────────────────────────────────────── -->
+  <section id="about" class="section">
+    <div class="sec-ghost l" aria-hidden="true">02</div>
+    <div class="wrap">
+      <div class="about-grid">
+
+        <!-- Parallax image slider -->
+        <div class="about-visual reveal left">
+          <div
+            class="about-img-wrap"
+            id="about-slider"
+            data-images='["hiking.jpg","surfing.jpg","diving.jpg"]'
+            role="img"
+            aria-label="Adventure gallery — swipe or drag to browse">
+
+            <img
+              src="hiking.jpg"
+              alt="Adventurers on a mountain trail"
+              class="about-img"
+              id="about-slide-img"
+              loading="lazy" decoding="async"
+              width="600" height="750"/>
+
+            <div class="about-img-fade"  aria-hidden="true"></div>
+            <div class="about-img-frame" aria-hidden="true"></div>
+            <div class="about-swipe"     aria-hidden="true">↔ Swipe</div>
+          </div>
+
+          <!-- Floating stat card -->
+          <div class="about-stat-card">
+            <div class="stat-n">100<sup>+</sup></div>
+            <div class="stat-l">Adventurers<br/>& growing</div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="about-text reveal right d2">
+          <div class="s-label">Who We Are</div>
+          <h2 class="s-title">Your World,<br/><em>Curated.</em></h2>
+          <p>Ashana Journeys is a registered brand, EST. 2026. We are a Trip Host platform focused on bringing people together through curated group travel experiences.
+
+We host travel, hikes, diving, and surfing trips across local and international destinations for those who want more than just travel, real experiences, real connections, and unforgettable moments.
+
+We also organize relaxed and light travel experiences for families, beginners, and those who prefer a slower pace. These trips focus on scenic destinations, cultural attractions, temples, and easy going itineraries that anyone can enjoy comfortably.
+
+Every trip is carefully planned and run with experienced guides and trusted partners, so you can feel safe, supported, and fully present in the journey with like minded people.
+
+Whether you are coming alone, with friends, or with family, you are always welcome here. You are not just joining a trip, you are joining a community.</p>
+
+          <div class="pillars">
+            <div class="pillar reveal d1"><span class="p-ico">🏔️</span><h4>Hikes &amp; Treks</h4><p>Local &amp; international trails</p></div>
+            <div class="pillar reveal d2"><span class="p-ico">🤿</span><h4>Scuba Diving</h4><p>Guided dives for all levels</p></div>
+            <div class="pillar reveal d3"><span class="p-ico">🏄</span><h4>Surf Adventures</h4><p>Waves + culture combined</p></div>
+            <div class="pillar reveal d4"><span class="p-ico">🌏</span><h4>Cultural Trips</h4><p>Deeper travel experiences</p></div>
+          </div>
+
+          <div style="margin-top:2.5rem;">
+            <a href="#trips" class="btn-glass">View All Trips</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- §E  MANIFESTO ─────────────────────────────────── -->
+  <section id="manifesto" class="section" aria-label="Our philosophy">
+    <div class="man-glow-l" aria-hidden="true"></div>
+    <div class="man-glow-r" aria-hidden="true"></div>
+    <div class="man-ghost"  aria-hidden="true">Raw</div>
+
+    <div class="man-inner reveal">
+      <div class="man-rule reveal d1"></div>
+      <blockquote class="man-q reveal d2">
+        "Not a package tour.<br/>
+        Not a <em>hashtag</em>.<br/>
+        A real journey."
+      </blockquote>
+      <p class="man-body reveal d3">
+        We built Ashana Journeys because we were tired of sanitised travel. No cookie-cutter itineraries. No empty resort pools. Just honest places, honest people, and stories you'll still be telling in ten years.
+      </p>
+      <div class="reveal d4">
+        <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="btn-glass">Join The Community</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- §F  GEAR / MERCHANT ───────────────────────────── -->
+  <section id="merchant" class="section">
+    <div class="sec-ghost r" aria-hidden="true">03</div>
+
+    <div class="merch-head reveal">
+      <div class="s-label">Official Gear</div>
+      <h2 class="s-title">Ashana <em>Store</em></h2>
+    </div>
+
+    <div class="merch-layout">
+      <!-- Static 360° T-shirt hero card — powered by Three.js -->
+      <div class="merch-hero reveal d1" id="tshirt-card">
+        <div class="mc-badge">360° View</div>
+        <div id="ts-iframe-wrap">
+          <iframe
+            src="ashana-3d-1.html"
+            title="3D Ashana Journeys T-Shirt Viewer"
+            scrolling="no"
+            allowtransparency="true">
+          </iframe>
+<div class="ts-click-overlay" aria-hidden="true">
+  <a href="tshirt-product.html" class="ts-overlay-label">View Product ↗</a>
+</div>
+
+        </div>
+        <div class="ts-hint" aria-hidden="true">↔ Drag or touch to rotate &nbsp;·&nbsp; Click below to shop</div>
+        <div class="mc-body">
+          <div class="mc-name">Ashana Journeys T-Shirt</div>
+          <div class="mc-price">RM 55</div>
+          <a href="tshirt-product.html" target="_blank" rel="noopener noreferrer" class="btn-buy" id="tshirt-buy-btn">View &amp; Buy →</a>
+        </div>
+      </div>
+
+      <!-- Dynamic merch from Firebase -->
+      <div class="merch-sub" id="merch-dyn" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- §G  SOCIAL / CONNECT ──────────────────────────── -->
+  <!-- §F.5  REVIEWS ──────────────────────────────────── -->
+  <section id="reviews" class="section">
+    <div class="sec-ghost l" aria-hidden="true">04</div>
+    <div class="wrap">
+      <div class="reviews-head reveal">
+        <div class="s-label">What Adventurers Say</div>
+        <h2 class="s-title">Real <em>Reviews</em></h2>
+      </div>
+      <div class="reviews-grid" id="reviews-grid" role="list" aria-live="polite">
+        <div class="reviews-empty">No reviews yet — be the first to adventure with us!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §F.6  FAQ ──────────────────────────────────────── -->
+  <section id="faq" class="section">
+    <div class="sec-ghost r" aria-hidden="true">05</div>
+    <div class="wrap">
+      <div class="faq-head reveal">
+        <div class="s-label">Got Questions?</div>
+        <h2 class="s-title">Frequently <em>Asked</em></h2>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-empty reveal">FAQs coming soon — stay tuned.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §G  SOCIAL / CONNECT ──────────────────────────── -->
+  <section id="social" class="section">
+    <div class="social-c">
+      <img src="logo.png" alt="Ashana Journeys" class="social-logo reveal" loading="lazy"/>
+      <div class="s-label reveal d1" style="justify-content:center; margin-bottom:.8rem;">Find Us Online</div>
+      <h2 class="s-title reveal d2">Connect <em>With Us</em></h2>
+
+      <div class="social-stack reveal d3">
+        <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="soc-card wa">
+          <div class="soc-ico">💬</div><div class="soc-txt"><b>WhatsApp</b><span>+60 10 204 6250</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://instagram.com/ashanajourneys" target="_blank" rel="noopener noreferrer" class="soc-card ig">
+          <div class="soc-ico">📸</div><div class="soc-txt"><b>Instagram</b><span>@ashanajourneys</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://tiktok.com/@ashanajourneys" target="_blank" rel="noopener noreferrer" class="soc-card">
+          <div class="soc-ico">🎵</div><div class="soc-txt"><b>TikTok</b><span>@ashanajourneys</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://youtube.com/@ashanajourneys" target="_blank" rel="noopener noreferrer" class="soc-card">
+          <div class="soc-ico">▶️</div><div class="soc-txt"><b>YouTube</b><span>Ashana Journeys Travel</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="https://facebook.com/ashanajourneys" target="_blank" rel="noopener noreferrer" class="soc-card">
+          <div class="soc-ico">👥</div><div class="soc-txt"><b>Facebook</b><span>Ashana Journeys Official</span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#f29a979e9e9db293819a939c93989d87809c978b81dc919d9f" class="soc-card">
+          <div class="soc-ico">✉️</div><div class="soc-txt"><b>Email Us</b><span><span class="__cf_email__" data-cfemail="523a373e3e3d1233213a333c33383d27203c372b217c313d3f">[email&#160;protected]</span></span></div><span class="soc-arr" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <img src="logo.png" alt="Ashana Journeys" class="ft-logo" loading="lazy"/>
+        <p>A Trip Host platform bringing people together through curated group travel. Hikes, diving, surfing &amp; cultural experiences — for everyone.</p>
+      </div>
+      <div class="ft-col">
+        <h5>Navigate</h5>
+        <a href="#trips">Upcoming Trips</a>
+        <a href="#about">Our Story</a>
+        <a href="#merchant">Gear Store</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="#social">Connect</a>
+      </div>
+      <div class="ft-col">
+        <h5>Contact</h5>
+        <a href="tel:+60102046250">+60 10 204 6250</a>
+        <a href="/cdn-cgi/l/email-protection#d2bab7bebebd92b3a1bab3bcb3b8bda7a0bcb7aba1fcb1bdbf"><span class="__cf_email__" data-cfemail="1b737e7777745b7a68737a757a71746e69757e626835787476">[email&#160;protected]</span></a>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2025 Ashana Journeys. All rights reserved.</p>
+      <span class="ft-motto">Adventure. Real People.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+     Modular IIFE blocks · Mobile-First · Production-Ready
+================================================================ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+
+import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+/* ── MODULE 13: TOGGLE T-SHIRT OVERLAY ──────────────── */
+window.addEventListener('message', (e) => {
+  if (e.data === 'toggle-product-btn') {
+    const overlay = document.querySelector('.ts-click-overlay');
+    if (overlay) overlay.classList.toggle('show');
+  }
+});
+
+/* ── FIREBASE ─────────────────────────────────────────── */
+const firebaseConfig = {
+  apiKey:            "AIzaSyAvMTGPX1NRdDWfBJVTwKFu1MX1-Junq7Y",
+  authDomain:        "ashana-journeys.firebaseapp.com",
+  projectId:         "ashana-journeys",
+  storageBucket:     "ashana-journeys.firebasestorage.app",
+  messagingSenderId: "1056206455125",
+  appId:             "1:1056206455125:web:5e09ea23b28847dff06fdc",
+  measurementId:     "G-FNKGTSYC8C"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+/* ── MODULE 1: VIEWPORT HEIGHT POLYFILL ──────────────── */
+/* Survives Instagram IAB · Safari · Facebook WebView */
+(function initVH() {
+  function set() {
+    document.documentElement.style.setProperty(
+      '--svh', (window.innerHeight * 0.01) + 'px'
+    );
+  }
+  set();
+  window.addEventListener('resize',            set,                           { passive: true });
+  window.addEventListener('orientationchange', () => setTimeout(set, 120));
+  window.addEventListener('scroll', function once() {
+    set();
+    window.removeEventListener('scroll', once);
+  }, { passive: true });
+})();
+
+/* ── MODULE 2: SCROLL REVEAL ─────────────────────────── */
+window.revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); window.revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0, rootMargin: '0px 0px -50px 0px' });
+
+function initReveals() {
+  document.querySelectorAll('.reveal').forEach(el => window.revealObs.observe(el));
+}
+initReveals();
+window.addEventListener('load', initReveals);
+
+
+/* ── MODULE 3: HERO MULTI-LAYER PARALLAX ─────────────── */
+(function initParallax() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  const video   = document.querySelector('.hero-video');
+  const ghost   = document.querySelector('.hero-ghost');
+  const content = document.querySelector('.hero-content');
+  if (!video || !content) return;
+
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (raf) return;
+    raf = true;
+    requestAnimationFrame(() => {
+      raf = false;
+      const y  = window.scrollY;
+      const vh = window.innerHeight;
+      if (y > vh * 1.4) return;
+
+      /* Video — slowest, deepest layer */
+      video.style.transform = `translateZ(0) scale(1.1) translateY(${y * 0.28}px)`;
+
+      /* Ghost — medium speed mid-layer */
+      if (ghost) ghost.style.transform =
+        `translateY(calc(-50% + ${y * 0.14}px)) translateX(-20px)`;
+
+      /* Content — subtle rise, fades out */
+      content.style.transform = `translateY(${y * 0.07}px)`;
+      content.style.opacity   = `${Math.max(0, 1 - y / (vh * 0.70))}`;
+    });
+  }, { passive: true });
+})();
+
+/* ── MODULE 4: NAV ACTIVE STATE — IntersectionObserver spy ── */
+(function initNavSpy() {
+  const sections   = document.querySelectorAll('section[id]');
+  const dockItems  = document.querySelectorAll('#dock [data-sec]');
+  const sideItems  = document.querySelectorAll('#sidebar [data-sec]');
+
+  function activate(id) {
+    [...dockItems, ...sideItems].forEach(el => {
+      el.classList.toggle('active', el.dataset.sec === id);
+    });
+  }
+
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) activate(e.target.id); });
+  }, { threshold: 0.35 });
+
+  sections.forEach(s => spy.observe(s));
+})();
+
+/* ── MODULE 5: CUSTOM CURSOR ─────────────────────────── */
+
+(function initCursor() {
+  if (!window.matchMedia('(pointer: fine)').matches) return; 
+
+  const dot  = document.getElementById('c-dot');
+  const ring = document.getElementById('c-ring');
+  if (!dot || !ring) return;
+
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+  });
+  (function loop() {
+    rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  document.querySelectorAll('a, button, .trip-card, .merch-card, .pillar, .soc-card, #ts-scene').forEach(el => {
+    el.addEventListener('mouseenter', () => { dot.classList.add('on'); ring.classList.add('on'); });
+    el.addEventListener('mouseleave', () => { dot.classList.remove('on'); ring.classList.remove('on'); });
+  });
+  document.addEventListener('mousedown', () => { dot.style.transform = 'translate(-50%,-50%) scale(0.65)'; });
+  document.addEventListener('mouseup',   () => { dot.style.transform = ''; });
+})();
+
+/* ── MODULE 6: ABOUT SLIDER — touch + mouse drag ─────── */
+(function initSlider() {
+  const wrap = document.getElementById('about-slider');
+  const img  = document.getElementById('about-slide-img');
+  if (!wrap || !img) return;
+
+  /* Images come from data-images attribute — no hardcoded URLs in JS */
+  let images;
+  try   { images = JSON.parse(wrap.dataset.images || '[]'); }
+  catch { images = []; }
+  if (images.length < 2) return;
+
+  let idx = 0, startX = 0, dragging = false, dx = 0;
+
+  function goTo(i) {
+    idx = (i + images.length) % images.length;
+    img.style.opacity = '0';
+    setTimeout(() => { img.src = images[idx]; img.style.opacity = '1'; }, 200);
+  }
+
+  /* Touch */
+  wrap.addEventListener('touchstart', e => {
+    startX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 36) goTo(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  /* Mouse drag */
+  wrap.addEventListener('mousedown', e => { dragging = true; startX = e.clientX; e.preventDefault(); });
+  window.addEventListener('mousemove', e => { if (dragging) dx = e.clientX - startX; });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (Math.abs(dx) > 36) goTo(idx + (dx < 0 ? 1 : -1));
+    dx = 0;
+  });
+})();
+
+/* ── MODULE 7: 360° T-SHIRT VIEWER ──────────────────── */
+(function initTShirt() {
+  const scene = document.getElementById('ts-scene');
+  const inner = document.getElementById('ts-inner');
+  if (!scene || !inner) return;
+
+  let isDragging = false, startX = 0, rotY = 0;
+
+  /* Auto-rotate */
+  (function loop() {
+    if (!isDragging) rotY += 0.22;
+    inner.style.transform = `rotateY(${rotY}deg)`;
+    requestAnimationFrame(loop);
+  })();
+
+  function getX(e) { return e.touches ? e.touches[0].clientX : e.clientX; }
+  function onStart(e) { isDragging = true; startX = getX(e); e.preventDefault(); }
+  function onMove(e)  { if (!isDragging) return; const x = getX(e); rotY += (x - startX) * 0.55; startX = x; }
+  function onEnd()    { isDragging = false; }
+
+  scene.addEventListener('mousedown',  onStart);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup',   onEnd);
+  scene.addEventListener('touchstart', onStart, { passive: false });
+  window.addEventListener('touchmove', onMove,  { passive: true });
+  window.addEventListener('touchend',  onEnd);
+})();
+
+/* ── MODULE 8: CAROUSEL SCROLL COUNTER ──────────────── */
+(function initCounter() {
+  const rail    = document.getElementById('trips-rail');
+  const counter = document.getElementById('trip-count');
+  if (!rail || !counter) return;
+
+  rail.addEventListener('scroll', () => {
+    const cards = rail.querySelectorAll('.trip-card');
+    if (!cards.length) return;
+    const cardW = cards[0].offsetWidth + 18;
+    const i     = Math.round(rail.scrollLeft / cardW) + 1;
+    counter.textContent = `${Math.min(i, cards.length)} / ${cards.length}`;
+  }, { passive: true });
+})();
+
+/* ── MODULE 9: FIRESTORE — TRIPS ─────────────────────── */
+onSnapshot(
+  collection(db, 'trips'),
+
+  /* ✅ Success */
+  snap => {
+    const rail    = document.getElementById('trips-rail');
+    const counter = document.getElementById('trip-count');
+    if (!rail) return;
+
+    rail.innerHTML = '';
+
+    if (snap.empty) {
+      rail.innerHTML = '<div class="rail-msg" role="status">No trips yet — check back soon!</div>';
+      if (counter) counter.textContent = '';
+      return;
+    }
+
+    if (counter) counter.textContent = `1 / ${snap.size}`;
+
+    snap.forEach((docSnap, i) => {
+      const t = docSnap.data();
+
+      /* Sanitise all dynamic text against XSS */
+      const name     = String(t.name     || '').replace(/</g,'&lt;');
+      const location = String(t.location || '').replace(/</g,'&lt;');
+      const date     = String(t.date     || '').replace(/</g,'&lt;');
+
+      const card = document.createElement('div');
+      card.className = 'trip-card';
+      card.setAttribute('role', 'listitem');
+
+      card.innerHTML = `
+        <div class="tc-glow-bar" aria-hidden="true"></div>
+        <div class="tc-shimmer"  aria-hidden="true"></div>
+        ${t.photo
+          ? `<div class="tc-photo-wrap"><img class="tc-photo" src="${t.photo}" alt="${name}" loading="lazy" onerror="this.parentElement.style.display='none'"/></div>`
+          : ''}
+        <div class="tc-body">
+          <span class="tc-tag">Group Experience</span>
+          <h3 class="tc-name">${name}</h3>
+          <div class="tc-meta">
+            ${location ? `<span>📍 ${location}</span>` : ''}
+            ${date     ? `<span>📅 ${date}</span>`     : ''}
+          </div>
+          <a href="javascript:void(0)" class="btn-join">Join Now →</a>
+        </div>
+      `;
+
+      rail.appendChild(card);
+    });
+  },
+
+  /* ✅ Error — never leaves user in a spinner */
+  err => {
+    console.error('[Ashana] Trips error:', err);
+    const rail = document.getElementById('trips-rail');
+    if (rail) rail.innerHTML =
+      '<div class="rail-msg rail-err" role="alert">⚠ Failed to load trips. Please refresh the page.</div>';
+  }
+);
+
+/* ── MODULE 10: FIRESTORE — MERCHANTS ───────────────── */
+onSnapshot(
+  collection(db, 'merchants'),
+
+  /* ✅ Success */
+  snap => {
+    const grid = document.getElementById('merch-dyn');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    snap.forEach((docSnap, i) => {
+      const m = docSnap.data();
+
+      const name  = String(m.name  || '').replace(/</g,'&lt;');
+      const price = String(m.price || '').replace(/</g,'&lt;');
+      const link  = String(m.link  || '').replace(/</g,'&lt;');
+
+      const card = document.createElement('div');
+      card.className = 'merch-card reveal';
+      card.style.transitionDelay = (i % 3 * 0.12) + 's';
+
+      card.innerHTML = `
+        <div class="mc-img">
+          <img src="${m.photo || ''}" alt="${name}" loading="lazy"
+               onerror="this.src='https://placehold.co/300x225/20232b/c9952b?text=Item'"/>
+        </div>
+        <div class="mc-body">
+          <div class="mc-name">${name}</div>
+          <div class="mc-price">RM ${price}</div>
+          <a href="${link || 'javascript:void(0)'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn-buy">Buy Now</a>
+            </div> `;
+
+      /* Observe for scroll reveal */
+      if (window.revealObs) window.revealObs.observe(card);
+      grid.appendChild(card);
+    });
+  },
+
+  /* ✅ Error — never leaves user in a blank grid */
+  err => {
+    console.error('[Ashana] Merchants error:', err);
+    const grid = document.getElementById('merch-dyn');
+    if (grid) grid.innerHTML =
+      '<div class="merch-err" role="alert">⚠ Failed to load items. Please refresh.</div>';
+  }
+);
+
+/* ── MODULE 11: FIRESTORE — REVIEWS ─────────────────── */
+onSnapshot(
+  collection(db, 'reviews'),
+  snap => {
+    const grid = document.getElementById('reviews-grid');
+    if (!grid) return;
+
+    if (snap.empty) {
+      grid.innerHTML = '<div class="reviews-empty">No reviews yet — be the first to adventure with us!</div>';
+      return;
+    }
+
+    grid.innerHTML = '';
+    snap.forEach((docSnap, i) => {
+      const r = docSnap.data();
+      const name    = String(r.name    || 'Adventurer').replace(/</g,'&lt;');
+      const message = String(r.message || '').replace(/</g,'&lt;');
+      const date    = String(r.date    || '').replace(/</g,'&lt;');
+      const initial = name.charAt(0).toUpperCase();
+
+      const card = document.createElement('div');
+      card.className = 'review-card reveal';
+      card.style.transitionDelay = (i % 3 * 0.12) + 's';
+      card.setAttribute('role','listitem');
+
+      card.innerHTML = `
+        <div class="review-stars">★★★★★</div>
+        <p class="review-msg">"${message}"</p>
+        <div class="review-author">
+          <div class="review-avatar">${initial}</div>
+          <div class="review-info">
+            <div class="review-name">${name}</div>
+            ${date ? `<div class="review-date">${date}</div>` : ''}
+          </div>
+        </div>
+      `;
+
+      if (window._revealObserver) window._revealObserver.observe(card);
+      grid.appendChild(card);
+    });
+  },
+  err => {
+    console.error('[Ashana] Reviews error:', err);
+    const grid = document.getElementById('reviews-grid');
+    if (grid) grid.innerHTML = '<div class="reviews-empty">⚠ Failed to load reviews. Please refresh.</div>';
+  }
+);
+
+/* ── MODULE 12: FAQ ACCORDION ────────────────────────── */
+(function initFAQ() {
+  document.addEventListener('click', e => {
+    const q = e.target.closest('.faq-q');
+    if (!q) return;
+    const item = q.closest('.faq-item');
+    const a    = item.querySelector('.faq-a');
+    const isOpen = q.classList.contains('open');
+
+    /* Close all */
+    document.querySelectorAll('.faq-q.open').forEach(el => {
+      el.classList.remove('open');
+      el.closest('.faq-item').querySelector('.faq-a').style.maxHeight = '0';
+    });
+
+    /* Toggle this one */
+    if (!isOpen) {
+      q.classList.add('open');
+      a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  });
+})();
+
+</script>
+</body>
+</html>

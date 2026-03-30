@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ashana Journeys T-Shirt — Official Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --forest-ink:  #07080c;
+  --forest-deep: #0f1015;
+  --forest-mid:  #20232b;
+  --cream:       #f0ebe0;
+  --cream-warm:  #ede8d9;
+  --gold:        #c9952b;
+  --gold-hi:     #e2aa3a;
+  --gold-glow:   rgba(201,149,43,0.22);
+  --gold-border: rgba(201,149,43,0.28);
+  --cyan:        #3de8f4;
+  --cyan-dim:    rgba(61,232,244,0.10);
+  --cyan-border: rgba(61,232,244,0.26);
+  --glass:       rgba(12,14,20,0.56);
+  --glass-hi:    rgba(18,20,28,0.75);
+  --glass-border:rgba(255,255,255,0.09);
+  --ink-mid:     rgba(240,235,224,0.52);
+  --ink-low:     rgba(240,235,224,0.28);
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --spring: cubic-bezier(0.16,1,0.3,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--forest-ink);
+  color: var(--cream);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(7,8,12,0.85);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 1rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hdr-brand {
+  font-family: var(--serif); font-size: 1.15rem; font-weight: 900;
+  color: var(--cream); letter-spacing: .03em;
+}
+.hdr-brand em { color: var(--gold); font-style: italic; }
+.hdr-back {
+  display: flex; align-items: center; gap: .45rem;
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-mid); text-decoration: none;
+  transition: color .25s ease;
+}
+.hdr-back:hover { color: var(--cyan); }
+
+/* ── MAIN LAYOUT ────────────────────────────────────── */
+.page { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+.product-grid {
+  display: grid; grid-template-columns: 1fr;
+  gap: 3rem; align-items: start;
+}
+@media (min-width: 768px) {
+  .product-grid { grid-template-columns: 1.1fr .9fr; gap: 4rem; }
+}
+
+/* ── IMAGE GALLERY ──────────────────────────────────── */
+.gallery { position: relative; }
+.main-img-wrap {
+  position: relative; border-radius: 20px; overflow: hidden;
+  background: var(--forest-mid);
+  border: 1px solid var(--glass-border);
+  aspect-ratio: 1;
+  box-shadow: 0 12px 60px rgba(0,0,0,.6), 0 0 80px rgba(201,149,43,0.06);
+}
+.main-img-wrap img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  transition: opacity .35s ease;
+}
+.thumbs {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: .65rem; margin-top: .85rem;
+}
+.thumb {
+  border-radius: 10px; overflow: hidden; aspect-ratio: 1; cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .25s ease, transform .25s var(--spring);
+  background: var(--forest-mid);
+}
+.thumb:hover { transform: translateY(-2px); }
+.thumb.active { border-color: var(--gold); box-shadow: 0 0 16px var(--gold-glow); }
+.thumb img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* Thumb label */
+.thumb-label {
+  text-align: center; font-size: .52rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-low); margin-top: .35rem;
+}
+
+/* ── PRODUCT INFO ────────────────────────────────────── */
+.product-info {}
+.product-badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .52rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--cyan); border: 1px solid var(--cyan-border);
+  background: var(--cyan-dim); padding: .2rem .65rem; border-radius: 99px;
+  margin-bottom: 1.2rem;
+}
+.product-name {
+  font-family: var(--serif); font-size: clamp(1.9rem,4vw,2.8rem);
+  font-weight: 900; line-height: .95; color: var(--cream); margin-bottom: .6rem;
+}
+.product-name em { color: var(--gold); font-style: italic; }
+.product-sub {
+  font-size: .78rem; font-weight: 300; color: var(--ink-low);
+  letter-spacing: .08em; margin-bottom: 1.8rem;
+}
+.product-price {
+  font-family: var(--serif); font-size: 2.4rem; font-weight: 900;
+  color: var(--gold); margin-bottom: .35rem; line-height: 1;
+}
+.product-price-note {
+  font-size: .72rem; font-weight: 300; color: var(--ink-low);
+  margin-bottom: 2rem; letter-spacing: .04em;
+}
+
+/* Size selector */
+.size-label {
+  font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--ink-mid); margin-bottom: .7rem;
+}
+.sizes {
+  display: flex; gap: .55rem; flex-wrap: wrap; margin-bottom: 2rem;
+}
+.size-btn {
+  min-width: 52px; padding: .5rem .8rem;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: var(--cream); border-radius: 8px;
+  font-family: var(--sans); font-size: .82rem; font-weight: 500;
+  cursor: pointer; transition: all .25s ease;
+}
+.size-btn:hover { border-color: var(--gold-border); background: var(--gold-glow); }
+.size-btn.active { background: var(--gold); border-color: var(--gold); color: var(--forest-ink); font-weight: 700; }
+
+/* Buy button */
+.btn-buy-main {
+  display: flex; align-items: center; justify-content: center; gap: .7rem;
+  width: 100%; padding: 1.1rem 2rem; min-height: 56px;
+  background: var(--gold); color: var(--forest-ink);
+  border: none; border-radius: 14px;
+  font-family: var(--sans); font-size: max(.82rem,15px); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  transition: background .3s ease, box-shadow .3s ease, transform .25s var(--spring);
+  margin-bottom: .75rem;
+  box-shadow: 0 8px 32px var(--gold-glow);
+}
+.btn-buy-main:hover { background: var(--gold-hi); box-shadow: 0 12px 44px rgba(201,149,43,.4); transform: translateY(-2px); }
+
+.btn-wa {
+  display: flex; align-items: center; justify-content: center; gap: .7rem;
+  width: 100%; padding: 1rem 2rem; min-height: 52px;
+  background: rgba(37,211,102,0.1); color: #25D366;
+  border: 1px solid rgba(37,211,102,0.28); border-radius: 14px;
+  font-family: var(--sans); font-size: max(.78rem,14px); font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  transition: all .3s ease;
+}
+.btn-wa:hover { background: rgba(37,211,102,0.2); }
+
+/* Divider */
+.info-divider { height: 1px; background: rgba(255,255,255,.07); margin: 2rem 0; }
+
+/* Product details */
+.detail-list { list-style: none; display: flex; flex-direction: column; gap: .55rem; }
+.detail-list li {
+  display: flex; align-items: baseline; gap: .6rem;
+  font-size: max(.8rem,13px); font-weight: 300; color: var(--ink-mid); line-height: 1.6;
+}
+.detail-list li::before { content: '✦'; color: var(--gold); font-size: .5rem; flex-shrink: 0; margin-top: .15rem; }
+
+/* Badge row */
+.trust-badges {
+  display: flex; gap: .65rem; flex-wrap: wrap; margin-top: 1.5rem;
+}
+.trust-badge {
+  display: flex; align-items: center; gap: .4rem;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 8px; padding: .4rem .75rem;
+  font-size: .62rem; letter-spacing: .08em; color: var(--ink-mid); font-weight: 300;
+}
+
+/* Film grain overlay */
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9990;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='64' height='64' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 64px 64px; opacity: 0.028;
+}
+
+/* Ambient glow */
+.bg-glow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 20%, rgba(201,149,43,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 85% 75%, rgba(61,232,244,0.05) 0%, transparent 70%);
+}
+.page { position: relative; z-index: 1; }
+
+/* Animate in */
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+.gallery { animation: fadeUp .7s cubic-bezier(0.16,1,0.3,1) .1s both; }
+.product-info { animation: fadeUp .7s cubic-bezier(0.16,1,0.3,1) .22s both; }
+</style>
+</head>
+<body>
+
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header>
+  <div class="hdr-brand">Ashana <em>&</em> Journeys</div>
+  <a href="index1.html" class="hdr-back">← Back to Main</a>
+</header>
+
+<div class="page">
+  <div class="product-grid">
+
+    <!-- IMAGE GALLERY -->
+    
+        <div class="gallery">
+      <div class="main-img-wrap">
+        <img id="main-img" src="https://i.ibb.co/20FS6DR1/20260330-085215.jpg" alt="Ashana Journeys T-Shirt"
+             onerror="this.src='https://placehold.co/600x600/20232b/c9952b?text=Front'"/>
+      </div>
+      <div class="thumbs">
+        <div>
+          <div class="thumb active" onclick="setImg('https://i.ibb.co/20FS6DR1/20260330-085215.jpg',this)">
+<img src="https://i.ibb.co/20FS6DR1/20260330-085215.jpg" alt="20260330 085215" border="0">
+          </div>
+          <div class="thumb-label">Front</div>
+        </div>
+        <div>
+          <div class="thumb" onclick="setImg('https://i.ibb.co/zhhK9F2s/20260330-085402.jpg',this)">
+<img src="https://i.ibb.co/zhhK9F2s/20260330-085402.jpg" alt="Back View" border="0">
+          </div>
+          <div class="thumb-label">Back</div>
+        </div>
+        <div>
+          <div class="thumb" onclick="setImg('https://i.ibb.co/5qY9K4G/IMG-20260330-085617.jpg',this)">
+<img src="https://i.ibb.co/5qY9K4G/IMG-20260330-085617.jpg" alt="Right View" border="0">
+          </div>
+          <div class="thumb-label">Right</div>
+        </div>
+        <div>
+          <div class="thumb" onclick="setImg('https://i.ibb.co/3JthHsy/IMG-20260330-085601.jpg',this)">
+<img src="https://i.ibb.co/3JthHsy/IMG-20260330-085601.jpg" alt="Left View" border="0">
+          </div>
+          <div class="thumb-label">Left</div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <!-- PRODUCT INFO -->
+    <div class="product-info">
+      <div class="product-badge">✦ Official Gear</div>
+      <h1 class="product-name">Ashana <em>Journeys</em><br/>T-Shirt</h1>
+      <p class="product-sub">EST. 2026 · Limited Edition · Unisex Fit</p>
+
+      <div class="product-price">RM 55</div>
+      <p class="product-price-note">Free delivery for orders via WhatsApp · Ships within 3–5 days</p>
+
+      <p class="size-label">Select Size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn active" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+        <button class="size-btn" onclick="selectSize(this)">XXL</button>
+      </div>
+
+      <a href="https://wa.me/60102046250?text=Hi!%20I'd%20like%20to%20order%20an%20Ashana%20Journeys%20T-Shirt." target="_blank" rel="noopener noreferrer" class="btn-buy-main">
+        🛍️ &nbsp; Buy Now — RM 55
+      </a>
+      <a href="https://wa.me/60102046250" target="_blank" rel="noopener noreferrer" class="btn-wa">
+        💬 &nbsp; Ask Us on WhatsApp
+      </a>
+
+      <div class="info-divider"></div>
+
+      <ul class="detail-list">
+        <li>Premium 100% cotton — soft, breathable, built for adventures</li>
+        <li>Exclusive Ashana Journeys EST. 2026 artwork front &amp; back</li>
+        <li>Unisex relaxed fit — true to size, available XS–XXL</li>
+        <li>Pre-shrunk fabric — wash cold, tumble dry low</li>
+        <li>Limited edition — once it's gone, it's gone</li>
+        <li>Official merchandise supporting Ashana Journeys community</li>
+      </ul>
+
+      <div class="trust-badges">
+        <span class="trust-badge">🔒 Secure Order</span>
+        <span class="trust-badge">📦 Ships in 3–5 Days</span>
+        <span class="trust-badge">✅ Official Gear</span>
+        <span class="trust-badge">💬 WhatsApp Support</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function setImg(src, thumb) {
+  const main = document.getElementById('main-img');
+  main.style.opacity = '0';
+  setTimeout(() => { main.src = src; main.style.opacity = '1'; }, 200);
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+
+function selectSize(btn) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update WA link with size
+  const size = btn.textContent;
+  const buyBtn = document.querySelector('.btn-buy-main');
+  buyBtn.href = `https://wa.me/60102046250?text=Hi!%20I'd%20like%20to%20order%20an%20Ashana%20Journeys%20T-Shirt%20in%20size%20${size}.`;
+}
+</script>
+</body>
+</html>
